@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState} from "react";
+import Layout from "./Layout";
+import {STATUS, PLAYER} from "./constants";
+import {handleCellClick, handleRestart} from "./handlers";
+import {createEmptyField} from "./utils";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [status, setStatus] = useState(STATUS.TURN);
+	const [currentPlayer, setCurrentPlayer] = useState(PLAYER.CROSS);
+	const [fieldArray, setFieldArray] = useState(createEmptyField());
+
+	const state = {
+		status,
+		setStatus,
+		currentPlayer,
+		setCurrentPlayer,
+		fieldArray,
+		setFieldArray,
+	};
+
+	return (
+		<Layout status={status} currentPlayer={currentPlayer} fieldArray={fieldArray} handleCellClick={(cellIndex) => handleCellClick(state, cellIndex)} handleRestart={() => handleRestart(state)} />
+	);
 }
 
 export default App;
